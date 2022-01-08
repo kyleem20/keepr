@@ -20,7 +20,7 @@ namespace keepr.Controllers
             _vks = vks;
 
         }
-
+        // TODO fix this Create, not working
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep newVK)
@@ -37,6 +37,37 @@ namespace keepr.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<VaultKeep> GetByVKId(int id)
+        {
+            try
+            {
+                VaultKeep vaultKeep = _vks.GetByVaultKeepId(id);
+                return Ok(vaultKeep);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<String>> Delete(int id)
+        {
+            try
+            {
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                _vks.Delete(id, userInfo.Id);
+                return Ok("Successfully Deleted");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
 
     }

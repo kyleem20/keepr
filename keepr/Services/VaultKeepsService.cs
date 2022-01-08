@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keepr.Models;
 using keepr.Repositories;
 
@@ -25,6 +26,36 @@ namespace keepr.Services
                 throw new Exception("Already in this vault");
             }
             return _repo.Create(newVK);
+        }
+
+        internal VaultKeep GetByVaultKeepId(int id)
+        {
+            VaultKeep vaultKeep = _repo.GetByVaultKeepId(id);
+            if (vaultKeep == null)
+            {
+                throw new Exception("Invalid keep Id");
+            }
+            return vaultKeep;
+        }
+
+        internal void Delete(int id, string userId)
+        {
+            VaultKeep toDelete = GetByVaultKeepId(id);
+            if (toDelete.CreatorId != userId)
+            {
+                throw new Exception("You cannot delete another users review (without paying for it)");
+            }
+            _repo.Delete(id);
+        }
+        internal List<VaultKeep> GetKeepsByVaultId(int id)
+        {
+            Vault vault = _vs.GetByVaultId(id);
+            if (vault.IsPrivate == true)
+            {
+                throw new Exception("This is a private vault");
+            }
+            List<VaultKeep> vks = _repo.GetByVaultId(id);
+            return vks;
         }
     }
 }
