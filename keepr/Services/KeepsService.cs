@@ -8,9 +8,11 @@ namespace keepr.Services
     public class KeepsService
     {
         private readonly KeepsRepository _repo;
-        public KeepsService(KeepsRepository repo)
+        private readonly VaultsService _vs;
+        public KeepsService(KeepsRepository repo, VaultsService vs)
         {
             _repo = repo;
+            _vs = vs;
         }
         internal Keep Create(Keep newKeep)
         {
@@ -57,5 +59,7 @@ namespace keepr.Services
             }
             _repo.Delete(id);
         }
+
+
     }
 }
