@@ -37,7 +37,7 @@ namespace keepr.Controllers
             }
         }
 
-        // FIXME Get all is not working properly
+        // FIXME Get all is not working properly (ask about the (List<Keep>)_ks...)
         [HttpGet]
         public ActionResult<List<Keep>> GetAll()
         {

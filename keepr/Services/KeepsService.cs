@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keepr.Models;
 using keepr.Repositories;
 
@@ -30,6 +31,11 @@ namespace keepr.Services
                 throw new Exception("Invalid keep Id");
             }
             return keep;
+        }
+
+        internal List<Keep> GetByCreatorId(string id)
+        {
+            return _repo.GetByCreatorId(id);
         }
 
         internal Keep Edit(Keep update)

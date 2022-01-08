@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -41,6 +42,39 @@ namespace keepr.Repositories
                 return vault;
             }, new { id }).FirstOrDefault();
         }
+
+        // internal List<Vault> GetByAccount()
+        // {
+        //     string sql = @"
+        //     SELECT
+        //         v.*,
+        //         a.*
+        //     FROM vaults v
+        //     JOIN accounts a ON v.creatorId = a.id
+        //     WHERE v.creatorId = @id;";
+        //     return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        //     {
+        //         vault.Creator = account;
+        //         return vault;
+        //     }, new { id }).ToList();
+        // }
+
+        internal List<Vault> GetByCreatorId(string id)
+        {
+            string sql = @"
+            SELECT
+                v.*,
+                a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id;";
+            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+            {
+                vault.Creator = profile;
+                return vault;
+            }, new { id }).ToList();
+        }
+
         internal void Edit(Vault original)
         {
             string sql = @"

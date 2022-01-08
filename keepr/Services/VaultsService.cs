@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keepr.Models;
 using keepr.Repositories;
 
@@ -27,6 +28,16 @@ namespace keepr.Services
             return vault;
 
         }
+
+        internal List<Vault> GetByCreatorId(string id)
+        {
+            return _repo.GetByCreatorId(id);
+        }
+        // public List<> GetVaultsByAccount(string id)
+        // {
+        //     return _repo.GetVaultsByAccount(id);
+        // }
+
         internal Vault Edit(Vault update)
         {
             Vault original = GetByVaultId(update.Id);
@@ -37,6 +48,8 @@ namespace keepr.Services
             _repo.Edit(original);
             return original;
         }
+
+
 
         internal void Delete(int id, string userId)
         {
