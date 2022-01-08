@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -26,21 +27,21 @@ namespace keepr.Repositories
         }
 
         // FIXME Get all is not working properly
-        // public List<Keep> GetAll()
-        // {
-        //     string sql = @"
-        //     Select
-        //         k.*,
-        //         a.*
-        //     FROM keeps k
-        //     JOIN accounts a ON k.creatorId = a.id 
-        //     ;";
-        //     return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
-        //     {
-        //         keep.Creator = profile;
-        //         return keep;
-        //     }).ToList();
-        // }
+        public List<Keep> GetAll()
+        {
+            string sql = @"
+            Select
+                k.*,
+                a.*
+            FROM keeps k
+            JOIN accounts a ON k.creatorId = a.id 
+            ;";
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            {
+                keep.Creator = profile;
+                return keep;
+            }).ToList();
+        }
 
         internal Keep GetByKeepId(int id)
         {

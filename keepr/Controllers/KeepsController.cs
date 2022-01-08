@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keepr.Models;
@@ -37,19 +38,19 @@ namespace keepr.Controllers
         }
 
         // FIXME Get all is not working properly
-        // [HttpGet]
-        // public ActionResult<List<Keep>> GetAll()
-        // {
-        //     try
-        //     {
-        //         List<Keep> keeps = _ks.GetAll();
-        //         return Ok(keeps);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+        [HttpGet]
+        public ActionResult<List<Keep>> GetAll()
+        {
+            try
+            {
+                List<Keep> keeps = (List<Keep>)_ks.GetAll();
+                return Ok(keeps);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("{id}")]
         public ActionResult<Keep> GetByKeepId(int id)

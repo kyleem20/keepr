@@ -17,10 +17,10 @@ namespace keepr.Services
         }
 
         // FIXME Get all is not working properly
-        // internal object GetAll()
-        // {
-        //     return _repo.GetAll();
-        // }
+        internal object GetAll()
+        {
+            return _repo.GetAll();
+        }
 
         internal Keep GetByKeepId(int id)
         {
