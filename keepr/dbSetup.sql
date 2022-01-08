@@ -11,9 +11,6 @@ CREATE TABLE IF NOT EXISTS keeps (
   name TEXT NOT NULL COMMENT 'Name of Keep',
   description TEXT NOT NULL,
   img TEXT NOT NULL,
-  keeps INT,
-  views INT,
-  shares INT,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
