@@ -18,7 +18,7 @@ namespace keepr.Services
             _ks = ks;
         }
 
-        public VaultKeep Create(VaultKeep newVK)
+        internal VaultKeep Create(VaultKeep newVK)
         {
             VaultKeep inVault = _repo.GetVaultKeepIfExist(newVK.VaultId, newVK.KeepId, newVK.CreatorId);
             if (inVault != null)
@@ -54,8 +54,8 @@ namespace keepr.Services
             {
                 throw new Exception("This is a private vault");
             }
-            List<VaultKeep> vks = _repo.GetByVaultId(id);
-            return vks;
+            List<VaultKeep> vksi = _repo.GetByVaultId(id);
+            return vksi;
         }
     }
 }

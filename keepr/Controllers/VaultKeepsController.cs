@@ -31,7 +31,7 @@ namespace keepr.Controllers
                 newVK.CreatorId = userInfo.Id;
                 VaultKeep vaultKeep = _vks.Create(newVK);
                 vaultKeep.Creator = userInfo;
-                return Ok(newVK);
+                return Ok(vaultKeep);
             }
             catch (Exception e)
             {

@@ -55,17 +55,32 @@ namespace keepr.Repositories
             string sql = @"DELETE FROM vaultKeeps WHERE id = @id LIMIT 1";
             _db.Execute(sql, new { id });
         }
+
+        // TODO fix failed tests in postman
         internal List<VaultKeep> GetByVaultId(int id)
         {
             string sql = @"
             Select
-                a.*,
-                vk.id AS VaultKeepId
+                vk.*,
+                a.*
             From vaultKeeps vk
-            Join accounts a ON a.id = vk.creatorId
+            Join accounts a ON vk.creatorId = a.id
             Where vk.vaultId = @id
             ;";
-            return _db.Query<VaultKeep>(sql, new { id }).ToList();
+            // string sql = @"
+            // Select
+            //     a.*,
+            //     vk.id AS VaultKeepId
+            // From vaultKeeps vk
+            // Join accounts a ON a.id = vk.creatorId
+            // Where vk.vaultId = @id AND vk.keep
+            // ;";
+            // return _db.Query<VaultKeep>(sql, new { id }).ToList();
+            return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (vaultKeep, profile) =>
+            {
+                vaultKeep.Creator = profile;
+                return vaultKeep;
+            }, new { id }).ToList();
 
         }
     }
