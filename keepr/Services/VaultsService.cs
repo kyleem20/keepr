@@ -19,12 +19,16 @@ namespace keepr.Services
         {
             return _repo.Create(newVault);
         }
-        public Vault GetByVaultId(int id)
+        public Vault GetByVaultId(int id, string userId)
         {
             Vault vault = _repo.GetByVaultId(id);
             if (vault == null)
             {
                 throw new Exception("Invalid Vault Id");
+            }
+            if (vault.IsPrivate == true && vault.CreatorId != userId)
+            {
+                throw new Exception("This Vault is private");
             }
             return vault;
 
@@ -39,22 +43,35 @@ namespace keepr.Services
         //     return _repo.GetVaultsByAccount(id);
         // }
 
-        internal Vault Edit(Vault update)
+        internal Vault Edit(Vault update, string userId)
         {
-            Vault original = GetByVaultId(update.Id);
-            original.Name = update.Name != null && update.Name.Trim().Length > 0 ? update.Name : original.Name;
-            original.Description = update.Description != null && update.Description.Trim().Length > 0 ? update.Description : original.Description;
-            original.IsPrivate = update.IsPrivate;
-            original.Img = update.Img;
-            _repo.Edit(original);
-            return original;
+            Vault vault = GetByVaultId(update.Id, userId);
+            if (vault.CreatorId != update.CreatorId)
+            {
+                throw new Exception("You cannot Edit another users vault");
+            }
+            vault.Name = update.Name != null && update.Name.Trim().Length > 0 ? update.Name : vault.Name;
+            vault.Description = update.Description != null && update.Description.Trim().Length > 0 ? update.Description : vault.Description;
+            vault.IsPrivate = update.IsPrivate;
+            vault.Img = update.Img;
+            _repo.Edit(vault);
+            return vault;
         }
 
+        public Vault IsVaultOwner(string userId, int id)
+        {
+            Vault vault = GetByVaultId(id, userId);
+            if (vault.CreatorId != userId)
+            {
+                throw new Exception("You are not the owner of this vault");
 
+            }
+            return vault;
+        }
 
         internal void Delete(int id, string userId)
         {
-            Vault remove = GetByVaultId(id);
+            Vault remove = GetByVaultId(id, userId);
             if (remove.CreatorId != userId)
             {
                 throw new Exception("You cannot delete this vault.");

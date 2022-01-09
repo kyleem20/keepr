@@ -50,7 +50,7 @@ namespace keepr.Controllers
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
                 update.CreatorId = userInfo.Id;
                 update.Id = id;
-                Vault updated = _vs.Edit(update);
+                Vault updated = _vs.Edit(update, userInfo.Id);
                 return Ok(updated);
             }
             catch (Exception e)
@@ -59,12 +59,15 @@ namespace keepr.Controllers
             }
         }
 
+        // TODO allow users not logged in to get vaults
         [HttpGet("{id}")]
-        public ActionResult<Vault> GetByVaultId(int id)
+        public async Task<ActionResult<Vault>> GetByVaultId(int id)
         {
+
             try
             {
-                Vault vault = _vs.GetByVaultId(id);
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                Vault vault = _vs.GetByVaultId(id, userInfo.Id);
                 return Ok(vault);
             }
             catch (Exception e)
@@ -73,11 +76,12 @@ namespace keepr.Controllers
             }
         }
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<VaultKeep>> GetKeepsByVaultId(int id)
+        public async Task<ActionResult<List<VaultKeep>>> GetKeepsByVaultId(int id)
         {
             try
             {
-                List<VaultKeep> vaultKeep = _vks.GetKeepsByVaultId(id);
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                List<VaultKeep> vaultKeep = _vks.GetKeepsByVaultId(id, userInfo.Id);
                 return Ok(vaultKeep);
             }
             catch (Exception e)

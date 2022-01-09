@@ -42,7 +42,13 @@ namespace keepr.Services
 
         internal Keep Edit(Keep update)
         {
+
             Keep original = GetByKeepId(update.Id);
+            if (original.CreatorId != update.CreatorId)
+            {
+                throw new Exception("You cannot Edit another users keeps");
+
+            }
             original.Name = update.Name != null && update.Name.Trim().Length > 0 ? update.Name : original.Name;
             original.Description = update.Description != null && update.Description.Trim().Length > 0 ? update.Description : original.Description;
             original.Img = update.Img;

@@ -18,13 +18,20 @@ namespace keepr.Services
             _ks = ks;
         }
 
-        internal VaultKeep Create(VaultKeep newVK)
+        internal VaultKeep Create(VaultKeep newVK, Account userInfo)
         {
             VaultKeep inVault = _repo.GetVaultKeepIfExist(newVK.VaultId, newVK.KeepId, newVK.CreatorId);
+            var vault = _vs.IsVaultOwner(userInfo.Id, newVK.VaultId);
             if (inVault != null)
             {
                 throw new Exception("Already in this vault");
             }
+            // if (inVault.CreatorId != vault)
+            // {
+            //     throw new Exception("You cannot add to another users vault");
+            // }
+            // newVK.CreatorId = userInfo.Id;
+
             return _repo.Create(newVK);
         }
 
@@ -43,13 +50,14 @@ namespace keepr.Services
             VaultKeep toDelete = GetByVaultKeepId(id);
             if (toDelete.CreatorId != userId)
             {
-                throw new Exception("You cannot delete another users review (without paying for it)");
+                throw new Exception("You cannot delete another users vault");
             }
             _repo.Delete(id);
         }
-        internal List<VaultKeep> GetKeepsByVaultId(int id)
+        // TODO allow users not logged in to get vaults and keeps, should be fixed through vaults controller
+        internal List<VaultKeep> GetKeepsByVaultId(int id, string userId)
         {
-            Vault vault = _vs.GetByVaultId(id);
+            Vault vault = _vs.GetByVaultId(id, userId);
             if (vault.IsPrivate == true)
             {
                 throw new Exception("This is a private vault");
