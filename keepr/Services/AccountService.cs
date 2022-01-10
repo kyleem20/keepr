@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using keepr.Models;
 using keepr.Repositories;
 
@@ -6,9 +8,12 @@ namespace keepr.Services
     public class AccountService
     {
         private readonly AccountsRepository _repo;
-        public AccountService(AccountsRepository repo)
+        private readonly VaultsRepository _vrepo;
+
+        public AccountService(AccountsRepository repo, VaultsRepository vrepo)
         {
             _repo = repo;
+            _vrepo = vrepo;
         }
 
         internal string GetProfileEmailById(string id)
@@ -35,6 +40,21 @@ namespace keepr.Services
             original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
             original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
             return _repo.Edit(original);
+        }
+
+        public Profile GetByProfileId(string id)
+        {
+            Profile profile = _repo.GetByProfileId(id);
+            if (profile == null)
+            {
+                throw new Exception("No profile with this id");
+            }
+            return profile;
+        }
+
+        internal List<Vault> GetMyVaults(string id)
+        {
+            return _vrepo.GetByCreatorId(id);
         }
     }
 }

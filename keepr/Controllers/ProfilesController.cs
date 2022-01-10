@@ -22,19 +22,19 @@ namespace keepr.Controllers
             _ks = ks;
             _acts = acts;
         }
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Profile>> GetByProfileId()
-        // {
-        //     try
-        //     {
-        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        //         return Ok(_acts.GetOrCreateProfile(userInfo));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+        [HttpGet("{id}")]
+        public ActionResult<Profile> GetByProfileId(string id)
+        {
+            try
+            {
+                Profile profile = _acts.GetByProfileId(id);
+                return Ok(profile);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("{id}/vaults")]
         public ActionResult<List<Vault>> GetVaults(string id)
@@ -50,7 +50,6 @@ namespace keepr.Controllers
             }
         }
 
-        // NOTE Why doesn't this work properly?
         [HttpGet("{id}/keeps")]
         public ActionResult<List<Keep>> GetKeeps(string id)
         {

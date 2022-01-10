@@ -26,11 +26,6 @@ namespace keepr.Services
             {
                 throw new Exception("Already in this vault");
             }
-            // if (inVault.CreatorId != vault)
-            // {
-            //     throw new Exception("You cannot add to another users vault");
-            // }
-            // newVK.CreatorId = userInfo.Id;
 
             return _repo.Create(newVK);
         }

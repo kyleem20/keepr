@@ -1,6 +1,8 @@
 using System.Data;
 using keepr.Models;
 using Dapper;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace keepr.Repositories
 {
@@ -24,7 +26,11 @@ namespace keepr.Repositories
             string sql = "SELECT * FROM accounts WHERE id = @id";
             return _db.QueryFirstOrDefault<Account>(sql, new { id });
         }
-
+        public Profile GetByProfileId(string id)
+        {
+            var sql = "SELECT * FROM accounts a WHERE a.id = @id;";
+            return _db.Query<Profile>(sql, new { id }).FirstOrDefault();
+        }
         internal Account Create(Account newAccount)
         {
             string sql = @"
@@ -46,6 +52,22 @@ namespace keepr.Repositories
             WHERE id = @Id;";
             _db.Execute(sql, update);
             return update;
+        }
+
+        internal List<Account> GetMyVaults(string id)
+        {
+            string sql = @"
+            SELECT
+                a.*,
+                v.*
+            FROM accounts a
+            JOIN vaults v ON v.creatorId = a.id
+            Where v.creatorId = @id ;";
+            return _db.Query<Account, Vault, Account>(sql, (account, vault) =>
+         {
+             account = (Account)vault.Creator;
+             return account;
+         }, new { id }).ToList();
         }
     }
 }

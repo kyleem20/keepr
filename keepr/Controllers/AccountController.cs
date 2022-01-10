@@ -5,6 +5,7 @@ using keepr.Services;
 using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace keepr.Controllers
 {
@@ -36,21 +37,25 @@ namespace keepr.Controllers
             }
         }
 
-        // [HttpGet("/vaults")]
-        // [Authorize]
-        // public async Task<ActionResult<List<Vault>>> GetMyVaults()
-        // {
-        //     try
-        //     {
-        //         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        [HttpGet("vaults")]
+        [Authorize]
+        public async Task<ActionResult<List<Vault>>> GetMyVaults()
+        {
+            try
+            {
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
 
-        //         return Ok(_vs.GetVaultsByAccount(userInfo.Id));
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+                List<Vault> accountVaults = _vs.GetVaultsByAccount(userInfo.Id);
+                return Ok(accountVaults);
+                // Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+
+                // return Ok(_vs.GetByCreatorId(userInfo.Id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 
 

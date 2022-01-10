@@ -34,14 +34,14 @@ namespace keepr.Services
 
         }
 
-        internal List<Vault> GetByCreatorId(string id)
+        public List<Vault> GetByCreatorId(string id)
         {
             return _repo.GetByCreatorId(id);
         }
-        // public List<> GetVaultsByAccount(string id)
-        // {
-        //     return _repo.GetVaultsByAccount(id);
-        // }
+        public List<Vault> GetVaultsByAccount(string id)
+        {
+            return _repo.GetByCreatorId(id);
+        }
 
         internal Vault Edit(Vault update, string userId)
         {
