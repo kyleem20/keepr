@@ -56,9 +56,10 @@ namespace keepr.Services
             return _repo.GetKeepsByVaultId(id); ;
         }
 
-        internal Vault GetByVaultIdNoUser(int id)
+        internal List<VaultKeepsViewModel> GetKeepsByVaultIdNoUser(int id)
         {
-            throw new NotImplementedException();
+            _repo.GetByVaultId(id);
+            return _repo.GetKeepsByVaultId(id); ;
         }
     }
 }

@@ -92,8 +92,8 @@ namespace keepr.Controllers
                 {
 
                     Vault kPublic = _vs.GetByVaultIdNoUser(id);
-
-                    return Ok(kPublic);
+                    List<VaultKeepsViewModel> vaultKeeps = _vks.GetKeepsByVaultIdNoUser(id);
+                    return Ok(vaultKeeps);
                 }
                 Vault vault = _vs.GetByVaultId(id, userInfo.Id);
                 List<VaultKeepsViewModel> vaultKeep = _vks.GetKeepsByVaultId(id, userInfo.Id);

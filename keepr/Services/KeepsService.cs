@@ -19,7 +19,6 @@ namespace keepr.Services
             return _repo.Create(newKeep);
         }
 
-        // FIXME Get all is not working properly
         internal object GetAll()
         {
             return _repo.GetAll();

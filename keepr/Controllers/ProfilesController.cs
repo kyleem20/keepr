@@ -42,6 +42,8 @@ namespace keepr.Controllers
             try
             {
                 List<Vault> vaults = _vs.GetByCreatorId(id);
+
+
                 return Ok(vaults);
             }
             catch (Exception e)

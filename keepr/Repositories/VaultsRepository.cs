@@ -27,6 +27,7 @@ namespace keepr.Repositories
             return newVault;
         }
 
+
         internal Vault GetByVaultId(int id)
         {
             string sql = @"Select

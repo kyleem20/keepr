@@ -48,13 +48,16 @@ namespace keepr.Services
             {
                 throw new Exception("This Vault is private");
             }
+
             return vault;
 
         }
 
         public List<Vault> GetByCreatorId(string id)
         {
-            return _repo.GetByCreatorId(id);
+            List<Vault> vaults = _repo.GetByCreatorId(id);
+            vaults = vaults.FindAll(v => v.IsPrivate == false);
+            return vaults;
         }
         public List<Vault> GetVaultsByAccount(string id)
         {
