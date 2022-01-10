@@ -30,6 +30,24 @@ namespace keepr.Services
             {
                 throw new Exception("This Vault is private");
             }
+            if (userId == null)
+            {
+                return vault;
+            }
+            return vault;
+
+        }
+        public Vault GetByVaultIdNoUser(int id)
+        {
+            Vault vault = _repo.GetByVaultId(id);
+            if (vault == null)
+            {
+                throw new Exception("Invalid Vault Id");
+            }
+            if (vault.IsPrivate == true)
+            {
+                throw new Exception("This Vault is private");
+            }
             return vault;
 
         }

@@ -55,28 +55,38 @@ namespace keepr.Repositories
             string sql = @"DELETE FROM vaultKeeps WHERE id = @id LIMIT 1";
             _db.Execute(sql, new { id });
         }
-
+        internal List<Vault> GetByVaultId(int id)
+        {
+            string sql = @"
+            SELECT
+                v.*,
+                a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id;";
+            return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+            {
+                vault.Creator = profile;
+                return vault;
+            }, new { id }).ToList();
+        }
         // TODO fix failed tests in postman
-        internal List<VaultKeep> GetByVaultId(int id)
+        internal List<VaultKeepsViewModel> GetKeepsByVaultId(int id)
         {
             string sql = @"
             Select
-                vk.*,
+                v.*,
+                k.*,
+                vk.id as vaultKeepId,
+                vk.creatorId AS vaultKeepCreatorId,
                 a.*
             From vaultKeeps vk
+            Join vaults v ON v.id = vk.vaultId
+            Join keeps k ON k.id = vk.keepId
             Join accounts a ON vk.creatorId = a.id
             Where vk.vaultId = @id
             ;";
-            // string sql = @"
-            // Select
-            //     a.*,
-            //     vk.id AS VaultKeepId
-            // From vaultKeeps vk
-            // Join accounts a ON a.id = vk.creatorId
-            // Where vk.vaultId = @id AND vk.keep
-            // ;";
-            // return _db.Query<VaultKeep>(sql, new { id }).ToList();
-            return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (vaultKeep, profile) =>
+            return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (vaultKeep, profile) =>
             {
                 vaultKeep.Creator = profile;
                 return vaultKeep;

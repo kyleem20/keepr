@@ -20,7 +20,6 @@ namespace keepr.Controllers
             _vks = vks;
 
         }
-        // TODO fix this Create, not working
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep newVK)

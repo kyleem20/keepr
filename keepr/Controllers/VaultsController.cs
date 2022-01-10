@@ -67,6 +67,12 @@ namespace keepr.Controllers
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                if (userInfo == null)
+                {
+
+                    Vault vPublic = _vs.GetByVaultIdNoUser(id);
+                    return Ok(vPublic);
+                }
                 Vault vault = _vs.GetByVaultId(id, userInfo.Id);
                 return Ok(vault);
             }
@@ -75,13 +81,22 @@ namespace keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
+        // FIXME not passing postman tests
         [HttpGet("{id}/keeps")]
-        public async Task<ActionResult<List<VaultKeep>>> GetKeepsByVaultId(int id)
+        public async Task<ActionResult<List<VaultKeepsViewModel>>> GetKeepsByVaultId(int id)
         {
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                List<VaultKeep> vaultKeep = _vks.GetKeepsByVaultId(id, userInfo.Id);
+                if (userInfo == null)
+                {
+
+                    Vault kPublic = _vs.GetByVaultIdNoUser(id);
+
+                    return Ok(kPublic);
+                }
+                Vault vault = _vs.GetByVaultId(id, userInfo.Id);
+                List<VaultKeepsViewModel> vaultKeep = _vks.GetKeepsByVaultId(id, userInfo.Id);
                 return Ok(vaultKeep);
             }
             catch (Exception e)

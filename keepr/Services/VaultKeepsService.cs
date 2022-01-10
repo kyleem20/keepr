@@ -50,15 +50,15 @@ namespace keepr.Services
             _repo.Delete(id);
         }
         // TODO allow users not logged in to get vaults and keeps, should be fixed through vaults controller
-        internal List<VaultKeep> GetKeepsByVaultId(int id, string userId)
+        internal List<VaultKeepsViewModel> GetKeepsByVaultId(int id, string userId)
         {
-            Vault vault = _vs.GetByVaultId(id, userId);
-            if (vault.IsPrivate == true)
-            {
-                throw new Exception("This is a private vault");
-            }
-            List<VaultKeep> vksi = _repo.GetByVaultId(id);
-            return vksi;
+            _repo.GetByVaultId(id);
+            return _repo.GetKeepsByVaultId(id); ;
+        }
+
+        internal Vault GetByVaultIdNoUser(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
