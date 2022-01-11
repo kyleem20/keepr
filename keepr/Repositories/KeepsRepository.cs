@@ -58,6 +58,25 @@ namespace keepr.Repositories
                 return keep;
             }, new { id }).FirstOrDefault();
         }
+        public Keep GetByKeepAddView(int id)
+        {
+            string sql = @"
+                SELECT
+                k.*,
+                a.*
+            FROM keeps k
+            JOIN accounts a ON a.id = k.creatorId
+            WHERE k.id = @id;
+            UPDATE keeps
+            SET views = + 1
+            WHERE id = @id;
+            ";
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            {
+                keep.Creator = profile;
+                return keep;
+            }, new { id }).FirstOrDefault();
+        }
 
         internal List<Keep> GetByCreatorId(string id)
         {

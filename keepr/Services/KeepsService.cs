@@ -34,6 +34,12 @@ namespace keepr.Services
             return keep;
         }
 
+        internal Keep GetByKeepAddView(int id)
+        {
+            Keep keep = _repo.GetByKeepAddView(id);
+            return keep;
+        }
+
         internal List<Keep> GetByCreatorId(string id)
         {
             return _repo.GetByCreatorId(id);

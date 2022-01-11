@@ -37,7 +37,6 @@ namespace keepr.Controllers
             }
         }
 
-        // FIXME Get all is not working properly (ask about the (List<Keep>)_ks...)
         [HttpGet]
         public ActionResult<List<Keep>> GetAll()
         {
@@ -56,6 +55,7 @@ namespace keepr.Controllers
         {
             try
             {
+
                 Keep keep = _ks.GetByKeepId(id);
                 return Ok(keep);
             }
@@ -63,6 +63,22 @@ namespace keepr.Controllers
             {
                 return BadRequest(e.Message);
             }
+            //             try
+            // {
+            //     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+
+            //     Keep keep = _ks.GetByKeepId(id);
+            //     if (userInfo.Id != keep.CreatorId)
+            //     {
+            //         Keep views = _ks.GetByKeepAddView(id);
+            //         return Ok(views);
+            //     }
+            //     return Ok(keep);
+            // }
+            // catch (Exception e)
+            // {
+            //     return BadRequest(e.Message);
+            // }
         }
 
         [HttpPut("{id}")]

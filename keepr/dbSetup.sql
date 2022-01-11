@@ -10,7 +10,10 @@ CREATE TABLE IF NOT EXISTS keeps (
   id INT NOT NULL AUTO_INCREMENT primary key COMMENT 'primary key',
   name TEXT NOT NULL COMMENT 'Name of Keep',
   description TEXT NOT NULL,
-  img TEXT NOT NULL,
+  views INT,
+  keeps INT,
+  shares INT,
+  img TEXT,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
@@ -19,7 +22,7 @@ CREATE TABLE IF NOT EXISTS vaults (
   name TEXT NOT NULL COMMENT 'Name of Vault',
   description TEXT NOT NULL,
   isPrivate BOOLEAN,
-  img TEXT NOT NULL,
+  img TEXT,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
