@@ -2,7 +2,12 @@
   <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/mlogo.jpeg" height="45" />
+        <img
+          class="rounded-pill"
+          alt="m logo"
+          src="../assets/img/mlogo.jpeg"
+          height="45"
+        />
       </div>
     </router-link>
     <button
@@ -54,7 +59,7 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded-pill"
             />
             <span class="mx-3 text-success lighten-30">{{ user.name }}</span>
           </div>

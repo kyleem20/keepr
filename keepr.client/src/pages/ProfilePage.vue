@@ -22,8 +22,8 @@ export default {
     const route = useRoute()
     onMounted(async () => {
       try {
-        await profilesService.getKeepsByCreatorId(route.params.id),
-          await profilesService.getVaultsByCreatorId(route.params.id)
+        await profilesService.getKeepsByCreatorId(route.params.id)
+        await profilesService.getVaultsByCreatorId(route.params.id)
 
       } catch (error) {
         logger.error(error)
