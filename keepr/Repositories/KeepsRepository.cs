@@ -104,6 +104,9 @@ namespace keepr.Repositories
                 name = @Name,
                 description = @Description,
                 img = @Img
+                views = @Views
+                keeps = @Keeps
+                shares = @Shares
             Where id = @Id
             ;";
             _db.Execute(sql, original);

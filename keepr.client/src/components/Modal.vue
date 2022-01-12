@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <!-- <div class="modal">
     <div class="modal" tabindex="-1">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -20,12 +20,27 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog" :class="size">
+      <div class="modal-content">
+        <div class="modal-body">
+          <slot name="modal-body"></slot>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
 export default {
+  props: {
+    size: {
+      type: String,
+      default: 'modal-dialog'
+    }
+  },
   setup() {
     return {}
   }

@@ -57,6 +57,9 @@ namespace keepr.Services
             original.Name = update.Name != null && update.Name.Trim().Length > 0 ? update.Name : original.Name;
             original.Description = update.Description != null && update.Description.Trim().Length > 0 ? update.Description : original.Description;
             original.Img = update.Img;
+            original.Keeps = update.Keeps;
+            original.Views = update.Views;
+            original.Shares = update.Shares;
             _repo.Edit(original);
             return original;
         }

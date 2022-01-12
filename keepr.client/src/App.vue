@@ -4,6 +4,7 @@
   </header>
   <main>
     <router-view />
+    <KeepModal />
   </main>
   <footer>
     <div class="bg-secondary text-light text-center p-4">Made by Kylee</div>

@@ -11,7 +11,7 @@
     "
   >
     <div class="row home-card p-5 bg-white rounded elevation-3">
-      <div class="col-3" v-for="k in keeps" :key="k.id">
+      <div class="col-md-3 col-6" v-for="k in keeps" :key="k.id">
         <Keep :keep="k" />
       </div>
     </div>

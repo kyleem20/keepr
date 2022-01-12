@@ -1,26 +1,35 @@
 <template>
-  <div class="component">
+  <div class="keep">
     <div
-      class="vault p-2"
+      class="p-2"
       :title="keep.name"
       data-bs-toggle="modal"
-      data-bs-target="#vault-modal"
+      data-bs-target="#keeps-modal"
       @click="setActive"
     >
-      <div class="bg-light elevation-1 rounded selectable">
+      <div class="row h-50 bg-light elevation-2 rounded selectable">
         <img
           :src="keep.img"
           :alt="keep.name"
-          class="object-fit-cover w-100 p-1 rounded"
+          class="p-0 object-fit-cover w-100 rounded-top"
         />
-        <div class="row d-flex p-2 justify-content-between text-center">
-          <h3 class="col-12">{{ keep.name }}</h3>
+        <div
+          class="
+            py-3
+            d-flex
+            justify-content-between
+            align-content-center
+            text-center
+          "
+        >
+          <h5 class="m-0 col-10">
+            <b>{{ keep.name }}</b>
+          </h5>
 
-          <p>
-            <b class="col-12" @click="routeToProfile">
-              ~ {{ keep.creator.name }}</b
-            >
-          </p>
+          <img
+            class="m-0 col-2 align-content-center rounded-pill h-100"
+            :src="keep.creator.picture"
+          />
         </div>
       </div>
     </div>
@@ -48,7 +57,7 @@ export default {
         }
         catch (error) {
           logger.error(error)
-          Modal.getOrCreateInstance(document.getElementById('vault-modal')).hide()
+          Modal.getOrCreateInstance(document.getElementById('keeps-modal')).hide()
           Pop.toast(error, 'error')
         }
       },
