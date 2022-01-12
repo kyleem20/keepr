@@ -1,19 +1,19 @@
 <template>
-  <div class="row mt-5 pt-5 p-2">
-    <h2>
-      {{ vault.name }}
-      <i
-        class="mdi mdi-plus selectable"
-        aria-label="create vault"
-        title="New Vault"
-        data-bs-toggle="modal"
-        data-bs-target="#create-vaults-modal"
-      ></i>
-    </h2>
-  </div>
-  <div class="row p-2 m-1">
-    <div class="col-md-2 col-6 p-2" v-for="k in keep" :key="k.id">
-      <AccountKeep :keep="k" />
+  <div
+    class="
+      container-fluid
+      home
+      flex-grow-1
+      d-flex
+      flex-column
+      align-items-center
+      justify-content-center
+    "
+  >
+    <div class="row p-5 bg-white rounded elevation-3">
+      <div class="col-md-3 col-6" v-for="k in keeps" :key="k.id">
+        <Keep :keep="k" />
+      </div>
     </div>
   </div>
 </template>
@@ -24,9 +24,8 @@ import { keepsService } from '../services/KeepsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
-import { Modal } from 'bootstrap'
 export default {
-  name: 'Account',
+  name: 'Home',
   setup() {
     onMounted(async () => {
       try {
@@ -37,20 +36,11 @@ export default {
       }
     })
     return {
-      account: computed(() => AppState.account),
-      profile: computed(() => AppState.profile),
-      vault: computed(() => AppState.activeVault),
-      keep: computed(() => AppState.keeps),
-      accountKeep: computed(() => AppState.keeps),
-
-
+      keeps: computed(() => AppState.keeps)
     }
   }
 }
 </script>
 
-<style scoped>
-img {
-  max-width: 100px;
-}
+<style scoped lang="scss">
 </style>
