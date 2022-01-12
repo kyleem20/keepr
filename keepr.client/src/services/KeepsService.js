@@ -6,14 +6,18 @@ class KeepsService {
 
     async getAll() {
         const res = await api.get('api/keeps')
-        logger.log('keeps getall', res.data)
+        // logger.log('keeps getall', res.data)
         AppState.keeps = res.data
     }
 
     async getById(id) {
         const res = await api.get(`api/keeps/${id}`)
-        logger.log('keep getById', res.data)
+        // logger.log('keep getById', res.data)
         AppState.activeKeep = res.data
+    }
+    async getByCreatorId(id) {
+        const res = await api.get(`api/profiles/${id}/keeps`)
+        AppState.profileKeeps = res.data
     }
     async create(keep) {
         const res = await api.post('api/keeps', keep)

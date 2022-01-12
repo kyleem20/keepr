@@ -15,15 +15,31 @@
     </div>
   </div>
   <div class="row mt-5 pt-5 p-2">
-    <h2>Vaults</h2>
+    <h2>
+      Vaults
+      <i
+        class="mdi mdi-plus selectable"
+        aria-label="create vault"
+        @click="createKeep"
+      ></i>
+    </h2>
   </div>
   <div class="row p-2">
     <!-- <Vault /> -->
   </div>
-  <div class="row p-2"><h2>Keeps</h2></div>
+  <div class="row p-2">
+    <h2>
+      Keeps
+      <i
+        class="mdi mdi-plus selectable"
+        aria-label="create keep"
+        @click="createKeep"
+      ></i>
+    </h2>
+  </div>
   <div class="row p-2 m-1">
-    <div class="col-2 p-2" v-for="k in keeps" :key="k.id">
-      <Keep :keep="k" />
+    <div class="col-md-2 col-6 p-2" v-for="k in keep" :key="k.id">
+      <AccountKeep :keep="k" />
     </div>
   </div>
 </template>
@@ -47,7 +63,9 @@ export default {
     })
     return {
       account: computed(() => AppState.account),
-      keeps: computed(() => AppState.keeps)
+      profile: computed(() => AppState.profile),
+      keep: computed(() => AppState.keeps),
+      accountKeep: computed(() => AppState.keeps)
 
     }
   }

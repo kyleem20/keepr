@@ -22,16 +22,25 @@
       <span class="navbar-toggler-icon" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link
-            :to="{ name: 'About' }"
-            class="btn text-success lighten-30 selectable text-uppercase"
+      <form @submit.prevent="searchKeepr">
+        <div class="input-group m-2">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search Keepr"
+            aria-label="Search Keepr"
+            aria-describedby="button-addon2"
+          />
+          <button
+            class="btn btn-outline-light"
+            type="submit"
+            id="button-addon2"
           >
-            About
-          </router-link>
-        </li>
-      </ul>
+            Search
+          </button>
+        </div>
+      </form>
+      <ul class="navbar-nav me-auto"></ul>
       <span class="navbar-text">
         <button
           class="

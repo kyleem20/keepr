@@ -68,7 +68,15 @@
                       v-if="keep.creatorId === account.id"
                       @click="deleteKeep"
                     >
-                      <i class="m-0 mdi mdi-delete-outline text-danger"></i>
+                      <i
+                        class="
+                          m-0
+                          p-1
+                          selectable
+                          mdi mdi-delete-outline
+                          text-danger
+                        "
+                      ></i>
                     </h5>
                     <p class="col-5 ps-2 pt-3">
                       <em class="d-flex align-content-end flex-end">

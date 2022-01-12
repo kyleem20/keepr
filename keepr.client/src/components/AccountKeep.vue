@@ -1,5 +1,5 @@
 <template>
-  <div class="keep">
+  <div class="keep" v-if="keep.creatorId === account.id">
     <div
       class="p-2"
       :title="keep.name"
@@ -25,12 +25,6 @@
           <h5 class="m-0 col-10">
             <b>{{ keep.name }}</b>
           </h5>
-
-          <img
-            class="m-0 col-2 align-content-center rounded-pill"
-            :src="keep.creator.picture"
-            height="35"
-          />
         </div>
       </div>
     </div>
@@ -45,12 +39,15 @@ import { keepsService } from '../services/KeepsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { useRouter } from 'vue-router'
+import { computed } from '@vue/reactivity'
 export default {
   props: { keep: { type: Object, required: true } },
   setup(props) {
     const router = useRouter()
 
     return {
+      account: computed(() => AppState.account),
+
       async setActive() {
         try {
           AppState.activeKeep = props.keep
