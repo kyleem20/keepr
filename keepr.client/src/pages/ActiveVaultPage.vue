@@ -12,7 +12,7 @@
   >
     <div class="row p-5 bg-white rounded elevation-3">
       <div class="col-md-3 col-6" v-for="k in keeps" :key="k.id">
-        <Keep :keep="k" />
+        <KeepKeeps :keep="k" />
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
   setup() {
     onMounted(async () => {
       try {
-        await keepsService.getAll()
+        await keepsService.getByCreatorId()
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')

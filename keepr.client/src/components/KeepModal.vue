@@ -51,14 +51,14 @@
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li v-for="v in vault" :key="v.id">
+                        <!-- <li v-for="v in vault" :key="v.id">
                           <div
                             class="dropdown-item selectable"
-                            @click="vault = vault.name"
+                            @click="vaultSelected = vault.name"
                           >
                             {{ vault.name }}
                           </div>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                     <h5
@@ -141,7 +141,7 @@ export default {
   setup() {
     return {
       keep: computed(() => AppState.activeKeep),
-      vault: computed(() => AppState.vaults),
+      // vault: computed(() => AppState.profileVaults),
       account: computed(() => AppState.account),
       async deleteKeep() {
         try {

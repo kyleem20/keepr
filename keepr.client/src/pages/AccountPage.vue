@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="row mt-5 pt-5 p-2">
-    <h2>
+    <h1>
       Vaults
       <i
         class="mdi mdi-plus selectable"
@@ -23,7 +23,7 @@
         data-bs-toggle="modal"
         data-bs-target="#create-vaults-modal"
       ></i>
-    </h2>
+    </h1>
   </div>
   <div class="row p-2 m-1">
     <div class="col-md-2 col-6 p-2" v-for="v in vault" :key="v.id">
@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="row p-2 m-1">
-    <h2>
+    <h1>
       Keeps
       <i
         class="mdi mdi-plus selectable"
@@ -39,7 +39,7 @@
         data-bs-toggle="modal"
         data-bs-target="#create-keeps-modal"
       ></i>
-    </h2>
+    </h1>
   </div>
   <div class="row p-2 m-1">
     <div class="col-md-2 col-6 p-2" v-for="k in keep" :key="k.id">
@@ -61,7 +61,7 @@ import { Modal } from 'bootstrap'
 import { AuthService } from '../services/AuthService'
 export default {
   name: 'Account',
-  props: { vault: { type: Object, required: true } },
+  props: { vault: { type: Object } },
 
   setup() {
     onMounted(async () => {
