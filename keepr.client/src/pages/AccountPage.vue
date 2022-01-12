@@ -20,16 +20,17 @@
       <i
         class="mdi mdi-plus selectable"
         aria-label="create vault"
-        title="New Vault"
         data-bs-toggle="modal"
         data-bs-target="#create-vaults-modal"
       ></i>
     </h2>
   </div>
-  <div class="row p-2">
-    <!-- <Vault /> -->
+  <div class="row p-2 m-1">
+    <div class="col-md-2 col-6 p-2" v-for="v in vault" :key="v.id">
+      <Vault :vault="v" />
+    </div>
   </div>
-  <div class="row p-2">
+  <div class="row p-2 m-1">
     <h2>
       Keeps
       <i
@@ -52,16 +53,21 @@
 <script>
 import { computed, onMounted } from '@vue/runtime-core'
 import { keepsService } from '../services/KeepsService'
+import { vaultsService } from '../services/VaultsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
 import { Modal } from 'bootstrap'
+import { AuthService } from '../services/AuthService'
 export default {
   name: 'Account',
+  props: { vault: { type: Object, required: true } },
+
   setup() {
     onMounted(async () => {
       try {
         await keepsService.getAll()
+        await vaultsService.getAll()
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')
@@ -71,6 +77,7 @@ export default {
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
       keep: computed(() => AppState.keeps),
+      vault: computed(() => AppState.vaults),
       accountKeep: computed(() => AppState.keeps),
 
 

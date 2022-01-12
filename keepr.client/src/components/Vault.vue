@@ -1,20 +1,37 @@
 <template>
-  <div
-    class="vault p-2"
-    :title="vault.name"
-    data-bs-toggle="modal"
-    data-bs-target="#vault-modal"
-    @click="setActive"
-  ></div>
+  <div class="vault p-2" v-if="vault.creatorId === account.id">
+    <div class="row h-50 bg-light elevation-2 rounded selectable">
+      <img
+        :src="vault.img"
+        :alt="vault.name"
+        class="p-0 object-fit-cover w-100 rounded-top"
+      />
+      <div
+        class="
+          py-3
+          d-flex
+          justify-content-between
+          align-content-center
+          text-center
+        "
+      >
+        <h5 class="m-0 col-10">
+          <b>{{ vault.name }}</b>
+        </h5>
+        <i class="mdi mdi-lock" v-if="vault.isPrivate == true"></i>
+      </div>
+    </div>
+  </div>
 </template>
 
-
+// TODO Router push to active vault on click
 <script>
 import { Modal } from 'bootstrap'
 import { AppState } from '../AppState'
 import { vaultsService } from '../services/VaultsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
+import { computed } from '@vue/reactivity'
 export default {
   props: {
     vault: {
@@ -23,6 +40,8 @@ export default {
   },
   setup(props) {
     return {
+      account: computed(() => AppState.account),
+
       async setActive() {
         try {
           AppState.activeVault = props.vault
