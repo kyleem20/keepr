@@ -21,7 +21,7 @@
       </div>
     </div>
   </div> -->
-  <div class="modal" tabindex="-1">
+  <div class="modal">
     <div class="modal-dialog" :class="size">
       <div class="modal-content">
         <div class="modal-body">

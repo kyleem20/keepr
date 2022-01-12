@@ -1,6 +1,5 @@
 <template>
   <Modal id="keeps-modal" size="modal-xl">
-    <!-- the # identifies which slot to inject this code into -->
     <template #modal-body>
       <div class="container-fluid">
         <div class="row">
