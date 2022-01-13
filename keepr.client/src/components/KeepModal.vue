@@ -30,13 +30,35 @@
                   align-items-between
                 "
               >
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-md-4 mdi mdi-eye text-secondary">
+                      {{ keep.views }}
+                    </div>
+                    <div class="col-md-4 mdi mdi-pin text-secondary">
+                      {{ keep.keeps }}
+                    </div>
+                    <div class="col-md-4 mdi mdi-share text-secondary">
+                      {{ keep.shares }}
+                    </div>
+                  </div>
+                </div>
                 <div class="info col-12">
-                  <h2 class="pt-5">{{ keep.name }}</h2>
-                  <h4>{{ keep.description }}</h4>
+                  <h2 class="pt-5 mb-2">{{ keep.name }}</h2>
+                  <p class="pt-5 text-grey darken-30">{{ keep.description }}</p>
                 </div>
                 <div class="col-12">
-                  <div class="row d-flex align-items-center">
-                    <div class="dropdown col-5 my-2">
+                  <div class="row">
+                    <div
+                      class="
+                        dropdown
+                        col-5
+                        p-0
+                        d-flex
+                        flex-row
+                        justify-content-end
+                      "
+                    >
                       <button
                         class="btn btn-secondary dropdown-toggle"
                         type="button"
@@ -45,43 +67,50 @@
                         aria-expanded="false"
                         required
                       >
-                        Add to Vault
+                        {{ myVaults }}
                       </button>
                       <ul
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <!-- <li v-for="v in vault" :key="v.id">
+                        <li v-for="v in vault" :key="v.id">
                           <div
                             class="dropdown-item selectable"
-                            @click="vaultSelected = vault.name"
+                            @click="myVaults = v.name"
                           >
-                            {{ vault.name }}
+                            {{ v.name }}
                           </div>
-                        </li> -->
+                        </li>
                       </ul>
                     </div>
                     <h5
-                      class="col-2 pt-2"
+                      class="col-2 pt-2 px-0 mx-0"
                       aria-label="delete"
                       v-if="keep.creatorId === account.id"
                       @click="deleteKeep"
                     >
                       <i
                         class="
-                          m-0
-                          p-1
-                          selectable
                           mdi mdi-delete-outline
+                          m-0
+                          py-1
+                          selectable
                           text-danger
                         "
                       ></i>
                     </h5>
-                    <p class="col-5 ps-2 pt-3">
-                      <em class="d-flex align-content-end flex-end">
-                        Creator Name
+                    <!-- <p class="col-5 pt-3">
+                      <em class="d-flex align-content-end f-10">
+                        <img
+                          :src="keeps.creator.picture"
+                          alt="profile picture"
+                          class="rounded w-25 me-2"
+                        />
+                        <p class="d-flex align-self-center">
+                          {{ profile.name }}
+                        </p>
                       </em>
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </div>
@@ -131,17 +160,23 @@
 
 
 <script>
-import { computed } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
+import { AuthService } from '../services/AuthService'
 export default {
-  setup() {
+  props: { vault: { type: Object }, keeps: { type: Object } },
+
+  setup(props) {
+    const myVaults = ref('Add to Vault')
     return {
+      myVaults,
       keep: computed(() => AppState.activeKeep),
-      // vault: computed(() => AppState.profileVaults),
+      profile: computed(() => AppState.profiles.filter(p => p.id === props.keep.creatorId)),
+      // vault: computed(() => AppState.vaults.filter(v => v.creatorId == AuthService.userInfo.id)),
       account: computed(() => AppState.account),
       async deleteKeep() {
         try {

@@ -5,6 +5,7 @@
         :src="vault.img"
         :alt="vault.name"
         class="p-0 object-fit-cover w-100 rounded-top"
+        @click="setActive"
       />
       <div
         class="
@@ -32,6 +33,8 @@ import { vaultsService } from '../services/VaultsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { computed } from '@vue/reactivity'
+import { useRouter } from 'vue-router'
+
 export default {
   props: {
     vault: {
@@ -39,6 +42,8 @@ export default {
     }
   },
   setup(props) {
+    const router = useRouter()
+
     return {
       account: computed(() => AppState.account),
 
@@ -46,10 +51,10 @@ export default {
         try {
           AppState.activeVault = props.vault
           await vaultsService.getById(props.vault.id)
+          router.push({ name: 'ActiveVault', params: { id: props.vault.id } })
         }
         catch (error) {
           logger.error(error)
-          Modal.getOrCreateInstance(document.getElementById('vault-modal')).hide()
           Pop.toast(error, 'error')
         }
       }

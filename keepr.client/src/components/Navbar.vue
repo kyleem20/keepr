@@ -78,7 +78,15 @@
           >
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
-                Manage Account
+                My Account
+              </div>
+              <div
+                class="list-group-item list-group-item-action hoverable"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight"
+              >
+                Edit Account
               </div>
             </router-link>
             <div
@@ -97,6 +105,7 @@
       </span>
     </div>
   </nav>
+  <EditProfile />
 </template>
 
 <script>

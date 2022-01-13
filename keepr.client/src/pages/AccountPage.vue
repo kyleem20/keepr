@@ -14,7 +14,7 @@
       <h5 class="m-0">Keeps:</h5>
     </div>
   </div>
-  <div class="row mt-5 pt-5 p-2">
+  <div class="row mt-5 pt-5 p-2 ms-1">
     <h1>
       Vaults
       <i
@@ -62,6 +62,7 @@ import { AuthService } from '../services/AuthService'
 export default {
   name: 'Account',
   props: { vault: { type: Object } },
+
 
   setup() {
     onMounted(async () => {

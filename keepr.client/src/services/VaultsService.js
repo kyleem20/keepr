@@ -11,8 +11,8 @@ class VaultsService {
     }
     async getById(id) {
         const res = await api.get(`api/vaults/${id}`)
-        logger.log('vault getById', res.data)
-        AppState.activeVault = new Vault(res.data)
+        // logger.log('vault getById', res.data)
+        AppState.activeVault = res.data
     }
     async getByCreatorId(id) {
         const res = await api.get(`api/profiles/${id}/vaults`)
@@ -20,14 +20,14 @@ class VaultsService {
     }
     async create(vault) {
         const res = await api.post('api/vaults', vault)
-        logger.log('vault create', res.data)
-        AppState.vaults.push(new Vault(res.data))
-        AppState.activeVault = new Vault(res.data)
+        // logger.log('vault create', res.data)
+        AppState.vaults.push(res.data)
+        AppState.activeVault = res.data
     }
     async edit(vault) {
         const res = await api.put('api/vaults/' + vault.id, vault)
-        logger.log('vault edit', res.data)
-        const editedVault = new Vault(res.data)
+        // logger.log('vault edit', res.data)
+        const editedVault = res.data
         AppState.activeVault = editedVault
         const index = AppState.vaults.findIndex(v => v.id === editedVault.id)
         if (index === -1) {
@@ -38,9 +38,9 @@ class VaultsService {
     }
     async remove() {
         const res = await api.delete('api/vaults/' + AppState.activeVault.id)
-        logger.log('vault remove', res.data)
+        // logger.log('vault remove', res.data)
         AppState.vaults = AppState.vaults.filter(v => v.id !== AppState.activeVault.id)
-        AppState.activeVault = new Vault()
+        // AppState.activeVault = 
     }
 
 }

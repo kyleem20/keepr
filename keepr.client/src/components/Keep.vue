@@ -63,7 +63,7 @@ export default {
         }
       },
       routeToProfile() {
-        Modal.getOrCreateInstance(document.getElementById('vault-modal')).hide()
+        Modal.getOrCreateInstance(document.getElementById('keeps-modal')).hide()
         router.push({ name: 'Profile', params: { id: props.keep.creatorId } })
       }
     }
