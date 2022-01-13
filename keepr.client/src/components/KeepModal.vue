@@ -3,7 +3,7 @@
     <template #modal-body>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-6">
+          <div class="col-md-6">
             <img
               height="500"
               class="w-100 image-fit-contain"
@@ -11,7 +11,7 @@
               alt=""
             />
           </div>
-          <div class="col-6">
+          <div class="col-md-6">
             <div class="row">
               <div class="text-end">
                 <button
@@ -32,13 +32,13 @@
               >
                 <div class="col-12">
                   <div class="row">
-                    <div class="col-md-4 mdi mdi-eye text-secondary">
+                    <div class="col-4 mdi mdi-eye text-secondary">
                       {{ keep.views }}
                     </div>
-                    <div class="col-md-4 mdi mdi-pin text-secondary">
+                    <div class="col-4 mdi mdi-pin text-secondary">
                       {{ keep.keeps }}
                     </div>
-                    <div class="col-md-4 mdi mdi-share text-secondary">
+                    <div class="col-4 mdi mdi-share text-secondary">
                       {{ keep.shares }}
                     </div>
                   </div>
@@ -52,7 +52,7 @@
                     <div
                       class="
                         dropdown
-                        col-5
+                        col-md-5
                         p-0
                         d-flex
                         flex-row
@@ -67,24 +67,37 @@
                         aria-expanded="false"
                         required
                       >
-                        {{ myVaults }}
+                        <div v-if="keep.vaultKeepId" @click="removeFromVault">
+                          Remove From Vault
+                        </div>
+                        <div v-else>
+                          {{ myVaults }}
+                        </div>
                       </button>
                       <ul
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuButton1"
                       >
-                        <li v-for="v in vault" :key="v.id">
-                          <div
-                            class="dropdown-item selectable"
-                            @click="myVaults = v.name"
-                          >
-                            {{ v.name }}
+                        <li
+                          v-for="v in vault"
+                          :key="v.id"
+                          @click="createVaultKeep"
+                        >
+                          <div class="dropdown-item selectable">
+                            <div
+                              @click="
+                                myVaults = v.name;
+                                selectedVault = v.id;
+                              "
+                            >
+                              {{ v.name }}
+                            </div>
                           </div>
                         </li>
                       </ul>
                     </div>
                     <h5
-                      class="col-2 pt-2 px-0 mx-0"
+                      class="col-md-2 pt-2 px-0 mx-0"
                       aria-label="delete"
                       v-if="keep.creatorId === account.id"
                       @click="deleteKeep"
@@ -99,7 +112,11 @@
                         "
                       ></i>
                     </h5>
-                    <p class="col-5 pt-3" v-if="keep.creator">
+                    <p
+                      class="col-md-5 pt-3 selectable"
+                      v-if="keep.creator"
+                      @click="routeToProfile"
+                    >
                       <em class="d-flex align-content-end f-10">
                         <img
                           :src="keep.creator.picture"
@@ -130,18 +147,40 @@ import { keepsService } from '../services/KeepsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
-import { AuthService } from '../services/AuthService'
+import { useRouter } from 'vue-router'
+import { vaultKeepsService } from '../services/VaultKeepsService'
+
 export default {
 
 
-  setup(props) {
+  setup() {
+    const router = useRouter()
+
     const myVaults = ref('Add to Vault')
+    const selectedVault = ref()
     return {
+      selectedVault,
       myVaults,
       keep: computed(() => AppState.activeKeep),
-      profile: computed(() => AppState.profiles.filter(p => p.id === props.keep.creatorId)),
-      vault: computed(() => AppState.vaults.filter(v => v.creatorId == AuthService.userInfo.id)),
+      profile: computed(() => AppState.profiles.filter(p => p.id === keep.creatorId)),
       account: computed(() => AppState.account),
+      vault: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.account.id)),
+      async createVaultKeep() {
+        try {
+          logger.log('selected vault', myVaults.value)
+          const vaultSelected = selectedVault.value
+          const found = AppState.vaults.find(v => v.id === vaultSelected)
+          const keepId = AppState.activeKeep.id
+          const vaultKeepObject = { vaultId: vaultSelected, keepId: keepId }
+          await vaultKeepsService.createVK(vaultKeepObject)
+          Pop.toast('You Added this keep to a vault', 'success')
+
+        } catch (error) {
+          logger.error(error)
+          Pop.toast('Failed to create a new vault keep', 'error')
+        }
+      }
+      ,
       async deleteKeep() {
         try {
           if (await Pop.confirm()) {
@@ -156,7 +195,7 @@ export default {
       },
       routeToProfile() {
         Modal.getOrCreateInstance(document.getElementById('keeps-modal')).hide()
-        router.push({ name: 'Profile', params: { id: props.keep.creatorId } })
+        router.push({ name: 'Profile', params: { id: AppState.activeKeep.creatorId } })
       }
     }
   }

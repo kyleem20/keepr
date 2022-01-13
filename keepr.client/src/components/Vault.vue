@@ -25,7 +25,6 @@
   </div>
 </template>
 
-// TODO Router push to active vault on click
 <script>
 import { Modal } from 'bootstrap'
 import { AppState } from '../AppState'

@@ -24,6 +24,7 @@ import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
 import { useRoute, useRouter } from 'vue-router'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'ActiveVault',
   props: { vault: { type: Object } },
@@ -34,7 +35,7 @@ export default {
       try {
         if (route.params.id) {
           await vaultsService.getById(route.params.id)
-          await vaultKeepsService.getKeepsForVault(route.params.id)
+          await vaultKeepsService.getKeepsForVault(AppState.activeVault.id)
         }
         if (route.params.id && route.params.isPrivate === true && route.params.creatorId != AppState.account || null) {
           router.push({ name: 'Home' })

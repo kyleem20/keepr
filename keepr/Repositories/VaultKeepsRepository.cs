@@ -75,15 +75,12 @@ namespace keepr.Repositories
         {
             string sql = @"
             Select
-                v.*,
                 k.*,
-                vk.id as vaultKeepId,
-                vk.creatorId AS vaultKeepCreatorId,
+                vk.id as VaultKeepId,
                 a.*
             From vaultKeeps vk
-            Join vaults v ON v.id = vk.vaultId
             Join keeps k ON k.id = vk.keepId
-            Join accounts a ON vk.creatorId = a.id
+            Join accounts a ON k.creatorId = a.id
             Where vk.vaultId = @id
             ;";
             return _db.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(sql, (vaultKeep, profile) =>

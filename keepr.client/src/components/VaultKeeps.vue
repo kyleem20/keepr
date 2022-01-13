@@ -41,20 +41,24 @@
 <script>
 import { Modal } from 'bootstrap'
 import { AppState } from '../AppState'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { keepsService } from '../services/KeepsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { useRouter } from 'vue-router'
+import { computed } from '@vue/reactivity'
 export default {
   props: { keep: { type: Object, required: true } },
   setup(props) {
     const router = useRouter()
 
     return {
+      // keep: computed(() => AppState.keeps),
+
       async setActive() {
         try {
           AppState.activeKeep = props.keep
-          await keepsService.getById(props.keep.id)
+          await vaultKeepsService.getKeepsForVault(AppState.activeVault.id)
         }
         catch (error) {
           logger.error(error)

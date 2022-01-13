@@ -67,8 +67,10 @@ export default {
   setup() {
     onMounted(async () => {
       try {
+
         await keepsService.getAll()
         await vaultsService.getAll()
+
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')
