@@ -99,18 +99,18 @@
                         "
                       ></i>
                     </h5>
-                    <!-- <p class="col-5 pt-3">
+                    <p class="col-5 pt-3" v-if="keep.creator">
                       <em class="d-flex align-content-end f-10">
                         <img
-                          :src="keeps.creator.picture"
+                          :src="keep.creator.picture"
                           alt="profile picture"
                           class="rounded w-25 me-2"
                         />
                         <p class="d-flex align-self-center">
-                          {{ profile.name }}
+                          {{ keep.creator.name }}
                         </p>
                       </em>
-                    </p> -->
+                    </p>
                   </div>
                 </div>
               </div>
@@ -120,42 +120,6 @@
       </div>
     </template>
   </Modal>
-  <!-- <Modal id="keeps-modal" size="modal-xl">
-    <template #modal-body>
-      <div class="container-fluid">
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-        <div class="row">
-          <div class="col-6">
-            <img
-              height="500"
-              class="w-100 object-fit-cover"
-              :src="keep.img"
-              :alt="keep.name"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col-6 text-center d-flex flex-column justify-content-center">
-        <div class="info">
-          <h2>
-            {{ keep.name }}
-          </h2>
-          <h4>{{ keep.description }}</h4>
-          <p>
-            <img
-              class="m-0 col-2 align-content-center rounded-pill"
-              :src="keep.creator.picture"
-            />
-          </p>
-        </div>
-      </div>
-    </template>
-  </Modal> -->
 </template>
 
 
@@ -168,7 +132,7 @@ import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
 import { AuthService } from '../services/AuthService'
 export default {
-  props: { vault: { type: Object }, keeps: { type: Object } },
+
 
   setup(props) {
     const myVaults = ref('Add to Vault')
@@ -176,7 +140,7 @@ export default {
       myVaults,
       keep: computed(() => AppState.activeKeep),
       profile: computed(() => AppState.profiles.filter(p => p.id === props.keep.creatorId)),
-      // vault: computed(() => AppState.vaults.filter(v => v.creatorId == AuthService.userInfo.id)),
+      vault: computed(() => AppState.vaults.filter(v => v.creatorId == AuthService.userInfo.id)),
       account: computed(() => AppState.account),
       async deleteKeep() {
         try {
@@ -190,6 +154,10 @@ export default {
           Pop.toast('Failed to delete keep', 'error')
         }
       },
+      routeToProfile() {
+        Modal.getOrCreateInstance(document.getElementById('keeps-modal')).hide()
+        router.push({ name: 'Profile', params: { id: props.keep.creatorId } })
+      }
     }
   }
 }
