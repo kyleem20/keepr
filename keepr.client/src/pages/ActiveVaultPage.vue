@@ -17,25 +17,35 @@
 </template>
 
 <script>
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, onMounted, watchEffect } from '@vue/runtime-core'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { vaultsService } from '../services/VaultsService'
 import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
+import { useRoute, useRouter } from 'vue-router'
 export default {
-  name: 'Home',
+  name: 'ActiveVault',
   props: { vault: { type: Object } },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
     onMounted(async () => {
       try {
-        await vaultsService.getByCreatorId(AppState.activeVault.id)
+        if (route.params.id) {
+          await vaultsService.getById(route.params.id)
+          await vaultKeepsService.getKeepsForVault(route.params.id)
+        }
+        if (route.params.id && route.params.isPrivate === true && route.params.creatorId != AppState.account || null) {
+          router.push({ name: 'Home' })
+        }
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')
       }
     })
     return {
-      keeps: computed(() => AppState.keeps),
+      keeps: computed(() => AppState.vaultKeeps),
       activeVault: computed(() => AppState.activeVault)
     }
   }
