@@ -26,18 +26,25 @@ namespace keepr.Services
 
         internal Keep GetByKeepId(int id)
         {
+            GetByKeepAddView(id);
             Keep keep = _repo.GetByKeepId(id);
             if (keep == null)
             {
                 throw new Exception("Invalid keep Id");
             }
+
             return keep;
         }
 
-        internal Keep GetByKeepAddView(int id)
+        internal void GetByKeepAddView(int id)
         {
-            Keep keep = _repo.GetByKeepAddView(id);
-            return keep;
+            _repo.GetByKeepAddView(id);
+
+        }
+        internal void GetByKeepAddKeep(int id)
+        {
+            _repo.GetByKeepAddKeep(id);
+
         }
 
         internal List<Keep> GetByCreatorId(string id)

@@ -64,10 +64,7 @@
                         Remove From Vault
                       </button>
                     </div>
-                    <div
-                      v-if="keep.creatorId === account.id && !keep.vaultKeepId"
-                      class="dropdown col-md-5 p-3"
-                    >
+                    <div class="dropdown col-md-5 p-3">
                       <button
                         class="btn btn-secondary dropdown-toggle"
                         type="button"

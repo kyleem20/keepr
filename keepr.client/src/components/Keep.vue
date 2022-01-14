@@ -8,7 +8,7 @@
       @click="setActive"
     >
       <div
-        class="row bg-light elevation-2 rounded selectable img"
+        class="row bg-light elevation-2 rounded selectable"
         :style="{ backgroundImage: `url(${keep.img})` }"
       >
         <div
@@ -20,7 +20,7 @@
             text-center
           "
         >
-          <h5 class="m-0 col-10">
+          <h5 class="m-0 col-10 text-light text-shadow shadowed">
             <b>{{ keep.name }}</b>
           </h5>
 
@@ -81,5 +81,8 @@ export default {
 .img {
   max-width: 100%;
   height: auto;
+}
+.shadowed {
+  text-shadow: 2px 1px #000000b0;
 }
 </style>

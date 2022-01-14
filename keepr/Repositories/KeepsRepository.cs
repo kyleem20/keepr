@@ -43,6 +43,7 @@ namespace keepr.Repositories
             }).ToList();
         }
 
+
         internal Keep GetByKeepId(int id)
         {
             string sql = @"Select
@@ -58,24 +59,45 @@ namespace keepr.Repositories
                 return keep;
             }, new { id }).FirstOrDefault();
         }
-        public Keep GetByKeepAddView(int id)
+
+        public void GetByKeepAddView(int id)
         {
+            // string sql = @"
+            //     SELECT
+            //     k.*,
+            //     a.*
+            // FROM keeps k
+            // JOIN accounts a ON a.id = k.creatorId
+            // WHERE k.id = @id;
+            // UPDATE keeps
+            // SET views = views + 1
+            // WHERE k.id = @Id;
+            // ";
             string sql = @"
-                SELECT
-                k.*,
-                a.*
-            FROM keeps k
-            JOIN accounts a ON a.id = k.creatorId
-            WHERE k.id = @id;
             UPDATE keeps
             SET views = views + 1
             WHERE id = @id;
             ";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
-            {
-                keep.Creator = profile;
-                return keep;
-            }, new { id }).FirstOrDefault();
+            _db.Execute(sql, new { id });
+            // return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            // {
+            //     keep.Creator = profile;
+            //     return keep;
+            // }, new { id }).FirstOrDefault();
+        }
+        public void GetByKeepAddKeep(int id)
+        {
+            string sql = @"
+            UPDATE keeps
+            SET keeps = keeps + 1
+            WHERE id = @id;
+            ";
+            _db.Execute(sql, new { id });
+            // return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            // {
+            //     keep.Creator = profile;
+            //     return keep;
+            // }, new { id }).FirstOrDefault();
         }
 
         internal List<Keep> GetByCreatorId(string id)

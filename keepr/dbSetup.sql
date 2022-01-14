@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS keeps (
   id INT NOT NULL AUTO_INCREMENT primary key COMMENT 'primary key',
   name TEXT NOT NULL COMMENT 'Name of Keep',
   description TEXT NOT NULL,
-  views INT,
-  keeps INT,
-  shares INT,
+  views INT Not Null Default 0,
+  keeps INT Not Null Default 0,
+  shares INT Not Null Default 0,
   img TEXT,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
@@ -35,3 +35,13 @@ CREATE TABLE IF NOT EXISTS vaultKeeps (
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+Alter Table
+  keeps
+Modify
+  Column shares INT Not Null Default 0;
+Select
+  *
+From
+  keeps
+WHERE
+  id = 25;

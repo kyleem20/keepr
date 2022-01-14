@@ -20,14 +20,17 @@ namespace keepr.Services
 
         internal VaultKeep Create(VaultKeep newVK, Account userInfo)
         {
+            _ks.GetByKeepAddKeep(newVK.KeepId);
             VaultKeep inVault = _repo.GetVaultKeepIfExist(newVK.VaultId, newVK.KeepId, newVK.CreatorId);
             var vault = _vs.IsVaultOwner(userInfo.Id, newVK.VaultId);
             if (inVault != null)
             {
                 throw new Exception("Already in this vault");
             }
+            var newVaultKeep = _repo.Create(newVK);
 
-            return _repo.Create(newVK);
+
+            return newVaultKeep;
         }
 
         internal VaultKeep GetByVaultKeepId(int id)
