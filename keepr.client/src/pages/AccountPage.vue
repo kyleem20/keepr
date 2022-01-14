@@ -70,7 +70,6 @@ export default {
       try {
 
         await keepsService.getAll()
-        await vaultsService.getAll()
 
       } catch (error) {
         logger.error(error)
@@ -81,7 +80,7 @@ export default {
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
       keep: computed(() => AppState.keeps),
-      vault: computed(() => AppState.vaults),
+      vault: computed(() => AppState.myVaults),
       accountKeep: computed(() => AppState.keeps),
 
 

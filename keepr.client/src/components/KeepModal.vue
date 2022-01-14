@@ -50,12 +50,22 @@
                   </p>
                 </div>
                 <div
-                  class="col-12 d-flex justify-content-between align-items-end"
+                  class="
+                    col-12
+                    d-flex
+                    justify-content-between
+                    align-items-end
+                    absolute
+                  "
                 >
                   <div class="row m-0 p-0 d-flex flex-row">
                     <div
                       class="col-md-5 py-3"
-                      v-if="keep.vaultKeepId && keep.creatorId === account.id"
+                      v-if="
+                        keep.vaultKeepId &&
+                        keep.creatorId === account.id &&
+                        activeVault.creatorId === account.id
+                      "
                     >
                       <button
                         class="p-0 m-0 btn btn-outline btn-secondary selectable"
@@ -64,7 +74,7 @@
                         Remove From Vault
                       </button>
                     </div>
-                    <div class="dropdown col-md-5 p-3">
+                    <div v-if="account" class="dropdown col-md-5 p-3">
                       <button
                         class="btn btn-secondary dropdown-toggle"
                         type="button"
@@ -114,7 +124,7 @@
                       ></i>
                     </h5>
 
-                    <div class="col-md-6 m-0 selectable">
+                    <div class="col-md-5 m-0 selectable">
                       <div class="rd-flex justify-content-center m-0">
                         <p
                           class="text-center pt-3"
@@ -169,7 +179,8 @@ export default {
       keep: computed(() => AppState.activeKeep),
       profile: computed(() => AppState.profiles.filter(p => p.id === keep.creatorId)),
       account: computed(() => AppState.account),
-      vault: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.account.id)),
+      vault: computed(() => AppState.myVaults),
+      activeVault: computed(() => AppState.activeVault),
       async createVaultKeep() {
         try {
           logger.log('selected vault', myVaults.value)
@@ -224,4 +235,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.absolute {
+  position: absolute;
+  bottom: 10px;
+  width: 50%;
+}
 </style>

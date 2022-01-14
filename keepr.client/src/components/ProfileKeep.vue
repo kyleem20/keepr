@@ -4,7 +4,7 @@
       class="p-2"
       :title="keep.name"
       data-bs-toggle="modal"
-      data-bs-target="#profile-keeps-modal"
+      data-bs-target="#keeps-modal"
       @click="setActive"
     >
       <div class="row h-50 bg-light elevation-2 rounded selectable">

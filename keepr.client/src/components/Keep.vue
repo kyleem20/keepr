@@ -1,34 +1,36 @@
 <template>
   <div class="keep">
     <div
-      class="p-2"
+      class="p- bg-light elevation-2 rounded selectable"
       :title="keep.name"
       data-bs-toggle="modal"
       data-bs-target="#keeps-modal"
       @click="setActive"
+      :style="{ backgroundImage: `url(${keep.img})` }"
     >
+      <img
+        :src="keep.img"
+        :alt="keep.name"
+        height="300"
+        class="p-0 object-fit-cover w-100 rounded-top img-fluid img-cover"
+      />
       <div
-        class="row bg-light elevation-2 rounded selectable"
-        :style="{ backgroundImage: `url(${keep.img})` }"
+        class="
+          p-3
+          d-flex
+          justify-content-between
+          align-content-center
+          text-center
+        "
       >
-        <div
-          class="
-            py-3
-            d-flex
-            justify-content-between
-            align-content-center
-            text-center
-          "
-        >
-          <h5 class="m-0 col-10 text-light text-shadow shadowed">
-            <b>{{ keep.name }}</b>
-          </h5>
+        <h5 class="m-0 col-10 text-light text-shadow shadowed">
+          <b>{{ keep.name }}</b>
+        </h5>
 
-          <img
-            class="m-0 col-2 align-content-center rounded-circle"
-            :src="keep.creator.picture"
-          />
-        </div>
+        <img
+          class="m-0 col-2 align-content-center rounded-circle"
+          :src="keep.creator.picture"
+        />
       </div>
     </div>
   </div>
@@ -81,6 +83,9 @@ export default {
 .img {
   max-width: 100%;
   height: auto;
+}
+.keep {
+  min-height: 200px;
 }
 .shadowed {
   text-shadow: 2px 1px #000000b0;

@@ -55,6 +55,8 @@ export default {
       account: computed(() => AppState.account),
       async deleteVault(vId) {
         try {
+          const agree = await Pop.confirm('Remove Keep from Vault?')
+          if (!agree) { return }
           await vaultsService.remove(vId)
           router.push({ name: 'Account' })
         }
