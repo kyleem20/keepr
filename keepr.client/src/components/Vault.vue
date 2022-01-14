@@ -4,7 +4,9 @@
       <img
         :src="vault.img"
         :alt="vault.name"
-        class="p-0 object-fit-cover w-100 rounded-top"
+        height="150"
+        width="100"
+        class="p-0 object-fit-cover rounded-top"
         @click="setActive"
       />
       <div

@@ -2,16 +2,17 @@
   <div class="about row p-3 mb-5">
     <div class="col-md-2 p-0">
       <img
-        class="rounded text-center ms-5 mb-0 w-100 image-fit-contain"
+        class="rounded text-center ms-5 mb-0 image-fit-contain"
         :src="account.picture"
         :alt="account.name"
         height="100"
+        width="100"
       />
     </div>
     <div class="col-md-8">
       <h2>{{ account.name }}</h2>
-      <h5 class="m-0">Vaults:</h5>
-      <h5 class="m-0">Keeps:</h5>
+      <h5 class="m-0">Vaults: {{ vault.length }}</h5>
+      <h5 class="m-0">Keeps: {{ keep.length }}</h5>
     </div>
   </div>
   <div class="row mt-5 pt-5 p-2 ms-1">

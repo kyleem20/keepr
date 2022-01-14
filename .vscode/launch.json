@@ -30,6 +30,12 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "command": "npm run serve",
+            "name": "Start Client",
+            "request": "launch",
+            "type": "node-terminal"
         }
     ]
 }

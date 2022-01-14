@@ -2,12 +2,17 @@
   <div class="row m-3 p-2">
     <h1 class="d-flex justify-content-between">
       {{ activeVault.name }}
-      <button type="button" class="btn btn-outline-secondary">
+      <button
+        v-if="activeVault.creatorId === account.id"
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="deleteVault(activeVault.id)"
+      >
         Delete Vault
       </button>
     </h1>
 
-    <h4 class="m-3 p-3">Keeps:</h4>
+    <h4 class="m-3 p-3">Keeps: {{ keeps.length }}</h4>
   </div>
   <div class="row p-3">
     <div class="col-md-3 col-6 p-3" v-for="k in keeps" :key="k.id">
@@ -47,7 +52,18 @@ export default {
     })
     return {
       keeps: computed(() => AppState.vaultKeeps),
-      activeVault: computed(() => AppState.activeVault)
+      activeVault: computed(() => AppState.activeVault),
+      account: computed(() => AppState.account),
+      async deleteVault(vId) {
+        try {
+          await vaultsService.remove(vId)
+          router.push({ name: 'Account' })
+        }
+        catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
+        }
+      }
     }
   }
 }

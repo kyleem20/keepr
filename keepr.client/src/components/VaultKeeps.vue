@@ -27,9 +27,8 @@
           </h5>
 
           <img
-            class="m-0 col-2 align-content-center rounded-pill"
+            class="m-0 col-2 align-content-center rounded-circle"
             :src="keep.creator.picture"
-            height="35"
           />
         </div>
       </div>

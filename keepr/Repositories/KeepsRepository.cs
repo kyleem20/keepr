@@ -103,9 +103,9 @@ namespace keepr.Repositories
             Set
                 name = @Name,
                 description = @Description,
-                img = @Img
-                views = @Views
-                keeps = @Keeps
+                img = @Img,
+                views = @Views,
+                keeps = @Keeps,
                 shares = @Shares
             Where id = @Id
             ;";

@@ -10,7 +10,7 @@
       justify-content-center
     "
   >
-    <div class="row p-5 bg-white rounded elevation-3">
+    <div class="row p-5">
       <div class="col-md-3 col-6" v-for="k in keeps" :key="k.id">
         <Keep :keep="k" />
       </div>
