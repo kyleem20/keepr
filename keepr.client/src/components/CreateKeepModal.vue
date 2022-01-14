@@ -48,28 +48,7 @@
             </div>
           </div>
 
-          <div class="dropdown mx-4 my-2">
-            <!-- <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                required
-              >
-                {{ vault }}
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li v-for="vault in vaults" :key="vault.id">
-                  <div
-                    class="dropdown-item selectable"
-                    @click="vault = activeVault"
-                  >
-                    {{ vault.name }}
-                  </div>
-                </li>
-              </ul> -->
-          </div>
+          <div class="dropdown mx-4 my-2"></div>
         </div>
 
         <div class="modal-footer">
@@ -116,27 +95,6 @@ export default {
         }
       }
 
-      // async createGameNight() {
-
-      //     try {
-      //       const game = gameQueue.value
-      //       await gameNightService.createGameNight(state.editable)
-      //       const gameNight = AppState.activeGameNight
-      //       await playersService.attendGameNight(gameNight.pin)
-
-      //       const found = AppState.myGames.find(g => g.name === game)
-      //       let gameObject = { gameId: found.id, gameNightId: AppState.activeGameNight.id }
-      //       await gameQueuesService.addToGameQueue(gameObject)
-      //       router.push({
-      //         name: "GameNightDetails",
-      //         params: { id: AppState.activeGameNight.id }
-      //       })
-      //       state.editable = {}
-
-      //     } catch (error) {
-      //       logger.error(error)
-      //       Pop.toast(error.message, 'error')
-      //     }
     }
   }
 }

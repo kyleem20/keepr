@@ -1,0 +1,75 @@
+<template>
+  <div class="keep" v-if="keep.creatorId === profile.id">
+    <div
+      class="p-2"
+      :title="keep.name"
+      data-bs-toggle="modal"
+      data-bs-target="#profile-keeps-modal"
+      @click="setActive"
+    >
+      <div class="row h-50 bg-light elevation-2 rounded selectable">
+        <img
+          :src="keep.img"
+          :alt="keep.name"
+          class="p-0 object-fit-cover w-100 rounded-top"
+        />
+        <div
+          class="
+            py-3
+            d-flex
+            justify-content-between
+            align-content-center
+            text-center
+          "
+        >
+          <h5 class="m-0 col-10">
+            <b>{{ keep.name }}</b>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import { Modal } from 'bootstrap'
+import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
+import { logger } from '../utils/Logger'
+import Pop from '../utils/Pop'
+import { useRouter } from 'vue-router'
+import { computed } from '@vue/reactivity'
+export default {
+  props: { keep: { type: Object, required: true } },
+  setup(props) {
+    const router = useRouter()
+
+    return {
+      account: computed(() => AppState.account),
+      profile: computed(() => AppState.activeProfile),
+      vault: computed(() => AppState.activeVault),
+
+      async setActive() {
+        try {
+          AppState.activeKeep = props.keep
+          await keepsService.getById(props.keep.id)
+        }
+        catch (error) {
+          logger.error(error)
+          Modal.getOrCreateInstance(document.getElementById('keeps-modal')).hide()
+          Pop.toast(error, 'error')
+        }
+      },
+      routeToProfile() {
+        Modal.getOrCreateInstance(document.getElementById('vault-modal')).hide()
+        router.push({ name: 'Profile', params: { id: props.keep.creatorId } })
+      }
+    }
+  }
+}
+</script>
+
+
+<style lang="scss" scoped>
+</style>

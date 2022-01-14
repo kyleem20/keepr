@@ -1,5 +1,5 @@
 <template>
-  <Modal id="keeps-modal" size="modal-xl">
+  <Modal id="profile-keeps-modal" size="modal-xl">
     <template #modal-body>
       <div class="container-fluid p-0 m-0">
         <div class="row m-0 p-0">
@@ -52,92 +52,23 @@
                 <div
                   class="col-12 d-flex justify-content-between align-items-end"
                 >
-                  <div class="row m-0 p-0 d-flex flex-row">
-                    <div>
-                      <div
-                        class="col-md-5 py-3"
-                        v-if="keep.vaultKeepId && keep.creatorId === account.id"
+                  <div class="col-md-5 m-0">
+                    <div class="row d-flex justify-content-center m-0">
+                      <p
+                        class="text-center pt-3 selectable"
+                        v-if="keep.creator"
+                        @click="routeToProfile"
                       >
-                        <button
-                          class="
-                            p-0
-                            m-0
-                            btn btn-outline btn-secondary
-                            selectable
-                          "
-                          @click="deleteVaultKeep(keep.vaultKeepId)"
-                        >
-                          Remove From Vault
-                        </button>
-                      </div>
-                      <div v-else class="dropdown col-md-5 p-3">
-                        <button
-                          class="btn btn-secondary dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton1"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          required
-                        >
-                          {{ myVaults }}
-                        </button>
-                        <ul
-                          class="dropdown-menu"
-                          aria-labelledby="dropdownMenuButton1"
-                        >
-                          <li
-                            v-for="v in vault"
-                            :key="v.id"
-                            @click="createVaultKeep"
-                          >
-                            <div class="dropdown-item selectable">
-                              <div
-                                @click="
-                                  myVaults = v.name;
-                                  selectedVault = v.id;
-                                "
-                              >
-                                {{ v.name }}
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <h5
-                        class="col-md-2 pt-2 px-0 mx-0 mt-3"
-                        aria-label="delete keep"
-                        v-if="keep.creatorId === account.id"
-                        @click="deleteKeep"
-                      >
-                        <i
-                          class="
-                            mdi mdi-delete-outline
-                            m-0
-                            py-1
-                            selectable
-                            text-danger
-                          "
-                        ></i>
-                      </h5>
-                    </div>
-                    <div class="col-md-5 m-0">
-                      <div class="row d-flex justify-content-center m-0">
-                        <p
-                          class="text-center pt-3 selectable"
-                          v-if="keep.creator"
-                          @click="routeToProfile"
-                        >
-                          <em class="f-10 d-flex align-items-center">
-                            <img
-                              :src="keep.creator.picture"
-                              alt="profile picture"
-                              class="rounded w-25 me-2 d-flex"
-                            />
+                        <em class="f-10 d-flex align-items-center">
+                          <img
+                            :src="keep.creator.picture"
+                            alt="profile picture"
+                            class="d-flex rounded w-25 me-2"
+                          />
 
-                            {{ keep.creator.name }}
-                          </em>
-                        </p>
-                      </div>
+                          {{ keep.creator.name }}
+                        </em>
+                      </p>
                     </div>
                   </div>
                 </div>

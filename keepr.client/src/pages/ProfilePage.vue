@@ -16,37 +16,22 @@
     </div>
   </div>
   <div class="row mt-5 pt-5 p-2 ms-1">
-    <h1>
-      Vaults
-      <i
-        class="mdi mdi-plus selectable"
-        aria-label="create vault"
-        data-bs-toggle="modal"
-        data-bs-target="#create-vaults-modal"
-      ></i>
-    </h1>
+    <h1>Vaults</h1>
   </div>
   <div class="row p-2 m-1">
     <div class="col-md-2 col-6 p-2" v-for="v in vault" :key="v.id">
-      <Vault :vault="v" />
+      <ProfileVault :vault="v" />
     </div>
   </div>
   <div class="row p-2 m-1">
-    <h1>
-      Keeps
-      <i
-        class="mdi mdi-plus selectable"
-        aria-label="create keep"
-        data-bs-toggle="modal"
-        data-bs-target="#create-keeps-modal"
-      ></i>
-    </h1>
+    <h1>Keeps</h1>
   </div>
   <div class="row p-2 m-1">
     <div class="col-md-2 col-6 p-2" v-for="k in keep" :key="k.id">
-      <AccountKeep :keep="k" />
+      <ProfileKeep :keep="k" />
     </div>
   </div>
+  <ProfileKeepModal />
 </template>
 
 
@@ -77,12 +62,12 @@ export default {
       }
     })
     return {
-      vaults: computed(() => AppState.profileVaults),
-      keeps: computed(() => AppState.profileKeeps),
+      vault: computed(() => AppState.profileVaults),
+      keep: computed(() => AppState.profileKeeps),
       account: computed(() => AppState.account),
       profile: computed(() => AppState.activeProfile),
-      keep: computed(() => AppState.keeps),
-      vault: computed(() => AppState.vaults),
+      // keep: computed(() => AppState.keeps),
+      // vault: computed(() => AppState.vaults),
       accountKeep: computed(() => AppState.keeps),
     }
   }

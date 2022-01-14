@@ -42,7 +42,7 @@ export default {
           await vaultsService.getById(route.params.id)
           await vaultKeepsService.getKeepsForVault(AppState.activeVault.id)
         }
-        if (route.params.id && route.params.isPrivate === true && route.params.creatorId != AppState.account || null) {
+        if (route.params.isPrivate === true && route.params.creatorId != AppState.account) {
           router.push({ name: 'Home' })
         }
       } catch (error) {

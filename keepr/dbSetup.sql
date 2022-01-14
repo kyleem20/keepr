@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS keeps (
 CREATE TABLE IF NOT EXISTS vaults (
   id INT NOT NULL AUTO_INCREMENT primary key COMMENT 'primary key',
   name TEXT NOT NULL COMMENT 'Name of Vault',
-  description TEXT NOT NULL,
+  description TEXT,
   isPrivate BOOLEAN,
   img TEXT,
   creatorId VARCHAR(255) NOT NULL,
