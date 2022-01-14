@@ -62,27 +62,24 @@
 }
 
 .masonry-with-flex {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  max-height: 1000px;
-  div {
-    width: 150px;
-    background: #EC985A;
-    color: white;
-    margin: 0 1rem 1rem 0;
-    text-align: center;
-    font-family: system-ui;
-    font-weight: 900;
-    font-size: 2rem;
-  } 
-  @for $i from 1 through 36 { 
-    div:nth-child(#{$i}) {
-      $h: (random(400) + 100) + px;
-      height: $h;
-      line-height: $h;
-    }
-  }
+  // margin: 1.5em auto;
+  // column-gap: 1.5em;
+  // flex-wrap: wrap;
+  // flex-flow: column wrap;
+  // display: flex;
+  // flex-direction: column;
+  // flex-wrap: wrap;
+  // max-height: 1000px;
+  // div {
+  //   width: 150px;
+  //   color: #d885a0;
+  //   margin: 0 1rem 1rem 0;
+  //   text-align: center;
+  //   font-family: system-ui;
+  //   font-weight: 900;
+  //   font-size: 2rem;
+  // }
+
 }
 .clip-text {
   white-space: nowrap;

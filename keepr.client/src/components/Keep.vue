@@ -7,12 +7,10 @@
       data-bs-target="#keeps-modal"
       @click="setActive"
     >
-      <div class="row h-50 bg-light elevation-2 rounded selectable">
-        <img
-          :src="keep.img"
-          :alt="keep.name"
-          class="p-0 object-fit-cover w-100 rounded-top"
-        />
+      <div
+        class="row bg-light elevation-2 rounded selectable img"
+        :style="{ backgroundImage: `url(${keep.img})` }"
+      >
         <div
           class="
             py-3
@@ -72,4 +70,16 @@ export default {
 
 
 <style lang="scss" scoped>
+.transparent {
+  background: linear-gradient(
+    to right,
+    transparent 10%,
+    #f6f6f6 50%,
+    transparent 100%
+  );
+}
+.img {
+  max-width: 100%;
+  height: auto;
+}
 </style>
